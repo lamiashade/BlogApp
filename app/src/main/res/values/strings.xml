@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">soDope</string>
+    <string name="title">Get Your Weight</string>
+    <string name="Password_hint">Password(...,&#8230;)?</string>
+    <string name="Email_hint">Email(...,&#8230;)?</string>
+    <string name="login_logo_desc">log in logo</string>
+    <string name="login_button">Login to Account</string>
+    <string name="login_create_acc_btn">Create a New Account</string>
+    <string name="action_search">Search</string>
+    <string name="action_account_setting">Account Setting</string>
+    <string name="action_logout">Log out</string>
+    <string name="create_new_account">Create new Account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="alrready_have_acc">Already have an account?</string>
+    <string name="setup_name_hint">Name(...,&#8230;)?</string>
+    <string name="setup_btn">Save Account Settings</string>
+    <string name="newPost_btn">New Blog Post</string>
+    <string name="newPost_text_hint">Write Something(...,&#8230;)?</string>
+    <string name="main_bottomMenu_home_home">Home</string>
+    <string name="main_bottomMenu_notification">Notification</string>
+    <string name="main_bottomMenu_Profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="blog_post_username">User Name</string>
+    <string name="blog_list_date">Blog Post Date</string>
+    <string name="blog_list_description">Description</string>
+    <string name="blog_profile_pic_desc">Profile picture goes here</string>
+</resources>

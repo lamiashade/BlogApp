@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_menu_home"
+        android:icon="@drawable/baseline_home_black_18dp"
+        android:title="@string/main_bottomMenu_home_home" />
+    <item
+        android:id="@+id/bottom_menu_notification"
+        android:icon="@drawable/baseline_notifications_black_18dp"
+        android:title="@string/main_bottomMenu_notification" />
+    <item
+        android:id="@+id/bottom_menu_profile"
+        android:icon="@drawable/baseline_face_black_18dp"
+        android:title="@string/main_bottomMenu_Profile" />
+</menu>

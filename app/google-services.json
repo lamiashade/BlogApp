@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "933966187365",
+    "firebase_url": "https://my-project-1524378594030.firebaseio.com",
+    "project_id": "my-project-1524378594030",
+    "storage_bucket": "my-project-1524378594030.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933966187365:android:6429ab4fc3d553b4",
+        "android_client_info": {
+          "package_name": "com.lamia.sodope"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933966187365-h610jelf0s946rcnl7lo29v2p3qbdlu7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lamia.sodope",
+            "certificate_hash": "4e6e995664a7839b2569927b213bd0c7d558b39f"
+          }
+        },
+        {
+          "client_id": "933966187365-9p1nqstt8n1088o38p578cosif4ntrkq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7MpDodex4N_655ATVJQvhxwMDR3KyTyY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933966187365-9p1nqstt8n1088o38p578cosif4ntrkq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
