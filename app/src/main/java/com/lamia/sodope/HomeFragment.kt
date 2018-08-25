@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -38,6 +39,8 @@ class HomeFragment : Fragment() {
     var lastVisible:DocumentSnapshot? = null
     var isFirstPageFirstLoad:Boolean? = true
 
+    var currentUser: FirebaseUser? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,9 +56,7 @@ class HomeFragment : Fragment() {
         blogListView!!.adapter = blogRecyclerAdapter
         blogListView!!.setHasFixedSize(true)
 
-
-
-        var currentUser = mAuth!!.currentUser
+        currentUser = mAuth!!.currentUser
 
         if (currentUser != null) {
 
@@ -79,14 +80,12 @@ class HomeFragment : Fragment() {
                 })
 
 
-            var firstQuery = FbasefireStore!!.collection("Posts").orderBy("timeStamp", Query.Direction.DESCENDING).limit(2)
+            var firstQuery = FbasefireStore!!.collection("Posts")
+                    .orderBy("timeStamp", Query.Direction.DESCENDING)
+                    .limit(2)
 
             firstQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { documentSnapshot, exception ->
 
-                if (exception != null) {
-
-                    Log.d("Fire Store error: ", exception.toString())
-                }
 
                 if (!documentSnapshot!!.isEmpty()) {
 
@@ -129,31 +128,34 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    fun loadMorePost(){
+    fun loadMorePost() {
 
-        var nextQuery = FbasefireStore!!.collection("Posts").orderBy("timeStamp", Query.Direction.DESCENDING)
-                .startAfter(lastVisible)
-                .limit(2)
+        if (currentUser != null) {
 
-        nextQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { docSnapshot, excpt->
+            var nextQuery = FbasefireStore!!.collection("Posts")
+                    .orderBy("timeStamp", Query.Direction.DESCENDING)
+                    .startAfter(lastVisible)
+                    .limit(1)
 
-            if (!docSnapshot!!.isEmpty) {
+            nextQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { docSnapshot, excpt ->
 
-                lastVisible = docSnapshot!!.documents.get(docSnapshot!!.size() - 1)
-                for (doc: DocumentChange in docSnapshot!!.documentChanges) {
+                if (!docSnapshot!!.isEmpty) {
 
-                    if (doc.type == DocumentChange.Type.ADDED) {
+                    lastVisible = docSnapshot!!.documents.get(docSnapshot!!.size() - 1)
+                    for (doc: DocumentChange in docSnapshot!!.documentChanges) {
 
-                        var blogPost = doc.document.toObject(BlogPost::class.java)
-                        (blog_list as ArrayList<BlogPost>).add(blogPost)
+                        if (doc.type == DocumentChange.Type.ADDED) {
 
-                        blogRecyclerAdapter!!.notifyDataSetChanged()
+                            var blogPost = doc.document.toObject(BlogPost::class.java)
+                            (blog_list as ArrayList<BlogPost>).add(blogPost)
 
+                            blogRecyclerAdapter!!.notifyDataSetChanged()
+
+                        }
                     }
                 }
-            }
 
-        })
+            })
+        }
     }
-
 }

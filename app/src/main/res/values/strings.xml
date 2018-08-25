@@ -26,4 +26,8 @@
     <string name="blog_list_date">Blog Post Date</string>
     <string name="blog_list_description">Description</string>
     <string name="blog_profile_pic_desc">Profile picture goes here</string>
+    <string name="profile_user_name">User name</string>
+    <string name="profile_post_holder">Post</string>
+    <string name="profile_friends_place_holder">Friends</string>
+    <string name="profile_reputation_place_holder">Reputaion</string>
 </resources>
