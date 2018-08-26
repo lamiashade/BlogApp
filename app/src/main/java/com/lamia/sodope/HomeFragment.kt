@@ -39,6 +39,9 @@ class HomeFragment : Fragment() {
     var lastVisible:DocumentSnapshot? = null
     var isFirstPageFirstLoad:Boolean? = true
 
+    var notifListView: RecyclerView?= null
+    var NotificationRecylerAdapter:NotificationRecylerAdapter? = null
+
     var currentUser: FirebaseUser? = null
 
 
@@ -48,13 +51,14 @@ class HomeFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_home, container, false)
 
         blog_list = ArrayList()
+
+        //Blog Post List
         blogListView = view.findViewById(R.id.blog_list_view)
-
         blogRecyclerAdapter = BlogRecyclerAdapter(blog_list as ArrayList<BlogPost>)
-
         blogListView!!.layoutManager = LinearLayoutManager(container!!.context)
         blogListView!!.adapter = blogRecyclerAdapter
         blogListView!!.setHasFixedSize(true)
+
 
         currentUser = mAuth!!.currentUser
 
@@ -69,10 +73,10 @@ class HomeFragment : Fragment() {
 
                     if(reachedBottom){
 
-                        var desc = lastVisible!!.getString("desc")
+//                        var desc = lastVisible!!.getString("desc")
                         Toast.makeText(context, "Reached bottom ", Toast.LENGTH_LONG).show()
 
-                        loadMorePost()
+//                        loadMorePost()
 
                     }
 
@@ -86,6 +90,7 @@ class HomeFragment : Fragment() {
 
             firstQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { documentSnapshot, exception ->
 
+                Log.d("Home Fragment: ", exception.toString())
 
                 if (!documentSnapshot!!.isEmpty()) {
 
@@ -96,7 +101,7 @@ class HomeFragment : Fragment() {
 
                     }
 
-                    for (doc: DocumentChange in documentSnapshot!!.documentChanges) {
+                    for (doc: DocumentChange in documentSnapshot.documentChanges) {
 
                         if (doc.type == DocumentChange.Type.ADDED) {
 
@@ -137,25 +142,33 @@ class HomeFragment : Fragment() {
                     .startAfter(lastVisible)
                     .limit(1)
 
-            nextQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { docSnapshot, excpt ->
+            try {
 
-                if (!docSnapshot!!.isEmpty) {
+                nextQuery.addSnapshotListener { docSnapshot, excpt ->
 
-                    lastVisible = docSnapshot!!.documents.get(docSnapshot!!.size() - 1)
-                    for (doc: DocumentChange in docSnapshot!!.documentChanges) {
+                    Log.d("Home Fragment: ", excpt.toString())
 
-                        if (doc.type == DocumentChange.Type.ADDED) {
+                    if (!docSnapshot!!.isEmpty) {
 
-                            var blogPost = doc.document.toObject(BlogPost::class.java)
-                            (blog_list as ArrayList<BlogPost>).add(blogPost)
+                        lastVisible = docSnapshot.documents.get(docSnapshot.size() - 1)
+                        for (doc: DocumentChange in docSnapshot.documentChanges) {
 
-                            blogRecyclerAdapter!!.notifyDataSetChanged()
+                            if (doc.type == DocumentChange.Type.ADDED) {
 
+                                var blogPost = doc.document.toObject(BlogPost::class.java)
+                                (blog_list as ArrayList<BlogPost>).add(blogPost)
+
+                                blogRecyclerAdapter!!.notifyDataSetChanged()
+
+                            }
                         }
                     }
-                }
 
-            })
+                }
+            } catch (e:Exception){
+
+
+            }
         }
     }
 }

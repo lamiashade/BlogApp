@@ -30,4 +30,6 @@
     <string name="profile_post_holder">Post</string>
     <string name="profile_friends_place_holder">Friends</string>
     <string name="profile_reputation_place_holder">Reputaion</string>
+    <string name="notification_date_holder">Date</string>
+    <string name="notification_desciption_holer">Description</string>
 </resources>

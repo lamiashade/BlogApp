@@ -23,7 +23,7 @@ import com.bumptech.glide.request.RequestOptions
 
 
 
-class BlogRecyclerAdapter(val blog_list: List<BlogPost>) : RecyclerView.Adapter<BlogRecyclerAdapter.ViewHolder>() {
+class BlogRecyclerAdapter(var blog_list: List<BlogPost>) : RecyclerView.Adapter<BlogRecyclerAdapter.ViewHolder>() {
 
     var fbFireStore:FirebaseFirestore? = null
     var mAuth:FirebaseAuth? = null
@@ -47,17 +47,15 @@ class BlogRecyclerAdapter(val blog_list: List<BlogPost>) : RecyclerView.Adapter<
         var image_url = blog_list.get(position).image_url
         holder.setImage(image_url!!)
 
-        var user_name:String? = null
-        var user_image:String? = null
-
         var user_id = blog_list.get(position).user_id
         fbFireStore = FirebaseFirestore.getInstance()
 
         fbFireStore!!.collection("Users").document(user_id).get().addOnCompleteListener() { task ->
 
             if (task.isSuccessful) {
-                user_name = task.result.getString("name")
-                user_image = task.result.getString("image")
+
+                var user_name = task.result.getString("name")
+                var user_image = task.result.getString("image")
 
                 holder.setUserId(user_name!!)
                 holder.setUserPic(user_image!!)
@@ -82,7 +80,7 @@ class BlogRecyclerAdapter(val blog_list: List<BlogPost>) : RecyclerView.Adapter<
         fun setDescText(text:String){
 
             descView =  itemView.findViewById(R.id.blog_desc)
-            descView!!.setText(text)
+            descView!!.text = text
 
         }
 
@@ -95,7 +93,7 @@ class BlogRecyclerAdapter(val blog_list: List<BlogPost>) : RecyclerView.Adapter<
 
         fun setUserId(name:String){
             userIdView = itemView.findViewById(R.id.blog_user_name)
-            userIdView!!.setText(name)
+            userIdView!!.text = name
 
         }
 
@@ -111,7 +109,7 @@ class BlogRecyclerAdapter(val blog_list: List<BlogPost>) : RecyclerView.Adapter<
         fun setDate(time:String){
 
             timeView = itemView.findViewById(R.id.blog_date)
-            timeView!!.setText(time)
+            timeView!!.text = time
 
         }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
@@ -30,22 +31,66 @@ class ProfileFragment : Fragment() {
     var mAuth: FirebaseAuth? = FirebaseAuth.getInstance()
 
     //User profile Top Card
-    var prof_top_card:CardView? = profile_user_image_container
-    var prof_img:CircleImageView? = profile_user_picture
-    var prof_img_bg:ImageView? = profile_user_background
-    var prof_user_name:TextView? = profile_user_name
+    var prof_top_card:CardView? = null
+    var prof_img:CircleImageView? = null
+    var prof_img_bg:ImageView? = null
+    var prof_user_name:TextView? = null
 
     //User profile Bottom Card
-    var profile_bottom_card:CardView? = profile_user_info
-    var prof_Post_count:TextView? = profile_post_count
-    var prof_freindds_count:TextView? = profile_friends_count
-    var prof_reutation_count:TextView? = profile_reputation_count
-
+    var profile_bottom_card:CardView? = null
+    var prof_Post_count:TextView? = null
+    var prof_freindds_count:TextView? = null
+    var prof_reutation_count:TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        //User profile Top Card
+        prof_top_card = profile_user_image_container
+        prof_img = profile_user_picture
+        prof_img_bg = profile_user_background
+        prof_user_name = profile_user_name
+
+        //User profile Bottom Card
+        profile_bottom_card = profile_user_info
+        prof_Post_count = profile_post_count
+        prof_freindds_count = profile_friends_count
+        prof_reutation_count = profile_reputation_count
+
+
+        FbasefireStore = FirebaseFirestore.getInstance()
+
+        // retrirving User data
+        var currentUser = mAuth!!.currentUser
+
+        if(currentUser != null){
+
+            var user_id = currentUser.uid.toString()
+
+            FbasefireStore!!.collection("Users").document(user_id).get().addOnCompleteListener { task ->
+
+                if (task.isSuccessful) {
+
+                    var user_name = task.result.getString("name")
+                    var user_image = task.result.getString("image")
+
+                    setName(user_name!!)
+                    setImage(user_image!!)
+
+                }
+            }
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
+    }
+
+    fun setName(name:String){
+        prof_user_name!!.text = name
+    }
+
+    fun setImage(imgUrl:String){
+        Glide.with(context!!).load(imgUrl).into(prof_img!!)
     }
 
 

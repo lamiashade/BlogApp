@@ -68,14 +68,13 @@ class SetupActivity : AppCompatActivity() {
         fDb!!.collection("Users").document(userId!!).get().addOnCompleteListener(){task ->
 
             if(task.isSuccessful){
+
                 if (task.getResult().exists()){
 
                     Toast.makeText(this, "User data Exists.", Toast.LENGTH_LONG).show()
 
                     var name = task.getResult().getString("name")
                     var image:String = task.getResult().getString("image")!!
-
-//                            "https://firebasestorage.googleapis.com/v0/b/my-project-1524378594030.appspot.com/o/profile_images%2FxUe0cS8dFRQlqTKM7KMKRPUpn773?alt=media&token=2a3007f3-2041-4daf-8b76-9a254bccaf42"
 
                     mainImageUri = Uri.parse(image)
 
@@ -116,8 +115,15 @@ class SetupActivity : AppCompatActivity() {
 
                         if (task.isSuccessful) {
 
-                            storeFirestore(task, userName)
+                            imagePath.downloadUrl.addOnCompleteListener() { dlResult ->
 
+                                var download_uri: Uri? = null
+
+                                if (dlResult.isSuccessful) {
+                                    download_uri = dlResult.result
+                                }
+                                storeFirestore(download_uri, userName)
+                            }
                         } else {
                             var error = task.exception!!.message
                             Toast.makeText(this, "Error: " + error, Toast.LENGTH_LONG).show()
@@ -146,37 +152,24 @@ class SetupActivity : AppCompatActivity() {
         }
     }
 
-    fun storeFirestore(task: Task<UploadTask.TaskSnapshot>?, userName:String){
+    fun storeFirestore(downloadUrl:Uri?, userName:String){
 
+        var download_uri:Uri? = null
 
-        var download_uri:Uri?= null
+        if (downloadUrl != null) {
 
-        if (task != null) {
-
-            var filepath = mStorageRef!!.child("profile_images").child(userId + ".jpg")
-
-            filepath.downloadUrl.addOnCompleteListener() { task ->
-
-                if (task.isSuccessful) {
-
-                    download_uri = task.result
-
-                } else {
-
-                    Toast.makeText(this, "Could not get file URl", Toast.LENGTH_LONG).show()
-                }
-            }
+            download_uri = downloadUrl
 
         }else{
 
-            download_uri= mainImageUri
+            download_uri = mainImageUri
         }
 
         var userMap:MutableMap<String,String> = hashMapOf()
 
 
         userMap.put("name", userName)
-        userMap.put("image", mainImageUri.toString())
+        userMap.put("image", download_uri.toString())
 
 
         fDb!!.collection("Users").document(userId!!).set(userMap as Map<String, Any>).addOnCompleteListener(){task->

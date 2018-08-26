@@ -44,6 +44,8 @@ class NewPostActivity : AppCompatActivity() {
 
     var compressedImageFile:Uri? = null
 
+    var thumbNailUri:Uri?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
@@ -111,16 +113,17 @@ class NewPostActivity : AppCompatActivity() {
 
                      var thumbNailPath = mStoreageRef!!.child("post_images/thumb_nails").child(randomImgName + ".jpeg")
 
-                     var thumbNailUri:Uri?= null
+                     thumbNailPath.putFile(compressedImageFile!!)
 
-                     thumbNailPath.downloadUrl.addOnCompleteListener(){thmbtask->
+                     thumbNailPath.downloadUrl.addOnCompleteListener() { thmbtask ->
 
-                         if(thmbtask.isSuccessful){
+                         if (thmbtask.isSuccessful) {
                              thumbNailUri = thmbtask.result
                          }
 
-                         thumbNailPath.putFile(compressedImageFile!!)
                      }
+
+
 
                      var downloadUri:Uri? = null
 
@@ -136,6 +139,8 @@ class NewPostActivity : AppCompatActivity() {
 
                              Toast.makeText(this, " Error: " + error, Toast.LENGTH_LONG).show()
                          }
+
+
 
                          var postMap:MutableMap<String,Any> = hashMapOf()
 
