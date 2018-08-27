@@ -89,6 +89,21 @@ class NewPostActivity : AppCompatActivity() {
 
                 newPostBtn!!.isEnabled = false
 
+//                var postImageFile:File= File(postimageUri!!.path)
+//
+//                try {
+//
+//                    compImageFile = Uri.fromFile(id.zelory.compressor.Compressor(this)
+//                            .setMaxWidth(300)
+//                            .setMaxHeight(300)
+//                            .setQuality(75)
+//                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+//                            .compressToFile(postImageFile))
+//                }catch(e: IOException){
+//
+//                    e.printStackTrace()
+//                }
+
                 var randomImgName = FieldValue.serverTimestamp().toString()
 
                 var filepath = mStoreageRef!!.child("post_images").child(randomImgName + ".jpeg")
@@ -101,8 +116,8 @@ class NewPostActivity : AppCompatActivity() {
 
                      try {
                          compressedImageFile = Uri.fromFile(id.zelory.compressor.Compressor(this)
-                                 .setMaxWidth(100)
-                                 .setMaxHeight(100)
+                                 .setMaxWidth(50)
+                                 .setMaxHeight(50)
                                  .setQuality(15)
                                  .setCompressFormat(Bitmap.CompressFormat.JPEG)
                                  .compressToFile(newImageFile))

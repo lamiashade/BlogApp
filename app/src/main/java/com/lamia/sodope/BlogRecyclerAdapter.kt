@@ -48,8 +48,8 @@ class BlogRecyclerAdapter(var blog_list: List<BlogPost>) : RecyclerView.Adapter<
         holder.setImage(image_url!!)
 
         var user_id = blog_list.get(position).user_id
-        fbFireStore = FirebaseFirestore.getInstance()
 
+        fbFireStore = FirebaseFirestore.getInstance()
         fbFireStore!!.collection("Users").document(user_id).get().addOnCompleteListener() { task ->
 
             if (task.isSuccessful) {

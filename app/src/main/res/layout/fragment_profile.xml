@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="176dp"
-                android:layout_marginEnd="48dp"
+                android:layout_marginEnd="56dp"
                 android:layout_marginTop="32dp"
                 android:text="@string/profile_friends_place_holder"
                 android:textStyle="bold"
@@ -66,10 +66,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/prof_friends"
-                app:layout_constraintHorizontal_bias="0.054"
+                app:layout_constraintHorizontal_bias="0.076"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.29000002" />
+                app:layout_constraintVertical_bias="0.277" />
 
             <ImageView
                 android:id="@+id/profile_add_friend_icon"
@@ -106,7 +106,7 @@
 
             <TextView
                 android:id="@+id/profile_post_count"
-                android:layout_width="19dp"
+                android:layout_width="21dp"
                 android:layout_height="24dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -116,18 +116,18 @@
                 android:textColor="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/profile_friends_count"
-                app:layout_constraintHorizontal_bias="0.141"
+                app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/prof_post"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/profile_friends_count"
-                android:layout_width="19dp"
+                android:layout_width="30dp"
                 android:layout_height="24dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="76dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:textColor="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -137,11 +137,11 @@
 
             <TextView
                 android:id="@+id/profile_reputation_count"
-                android:layout_width="19dp"
+                android:layout_width="39dp"
                 android:layout_height="24dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="56dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:textColor="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"

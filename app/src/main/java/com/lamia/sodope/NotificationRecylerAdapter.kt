@@ -52,19 +52,16 @@ class NotificationRecylerAdapter(var blog_list: List<BlogPost>):RecyclerView.Ada
 
             image_thumbNail_View = itemView.findViewById(R.id.notification_thumb_nail_img)
             Glide.with(itemView.context).applyDefaultRequestOptions(placeholderOption).load(thumb_nail).into(image_thumbNail_View!!)
-
         }
+
         fun setDate(date:String){
             notification_date_View = itemView.findViewById(R.id.notification_date_text)
-            notification_date_View!!.setText(date)
-
+            notification_date_View!!.text = date
         }
 
         fun setDesc(desc:String){
             notification_desc_View = itemView.findViewById(R.id.notification_description_text)
-            notification_desc_View!!.setText(desc)
-
-
+            notification_desc_View!!.text = desc
         }
     }
 

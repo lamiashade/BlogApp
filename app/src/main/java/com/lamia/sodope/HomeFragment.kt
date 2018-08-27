@@ -73,7 +73,6 @@ class HomeFragment : Fragment() {
 
                     if(reachedBottom){
 
-//                        var desc = lastVisible!!.getString("desc")
                         Toast.makeText(context, "Reached bottom ", Toast.LENGTH_LONG).show()
 
 //                        loadMorePost()

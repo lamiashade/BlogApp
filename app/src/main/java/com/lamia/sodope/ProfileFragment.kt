@@ -44,21 +44,22 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        FbasefireStore = FirebaseFirestore.getInstance()
+
+        var view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         //User profile Top Card
-        prof_top_card = profile_user_image_container
-        prof_img = profile_user_picture
-        prof_img_bg = profile_user_background
-        prof_user_name = profile_user_name
+        prof_top_card = view.findViewById(R.id.profile_user_image_container)
+        prof_img = view.findViewById(R.id.profile_user_picture)
+        prof_img_bg = view.findViewById(R.id.profile_user_background)
+        prof_user_name = view.findViewById(R.id.profile_user_name)
 
         //User profile Bottom Card
-        profile_bottom_card = profile_user_info
-        prof_Post_count = profile_post_count
-        prof_freindds_count = profile_friends_count
-        prof_reutation_count = profile_reputation_count
+        profile_bottom_card = view!!.findViewById(R.id.profile_user_info)
+        prof_Post_count = view.findViewById(R.id.profile_post_count)
+        prof_freindds_count = view.findViewById(R.id.profile_friends_count)
+        prof_reutation_count = view.findViewById(R.id.profile_reputation_count)
 
-
-        FbasefireStore = FirebaseFirestore.getInstance()
 
         // retrirving User data
         var currentUser = mAuth!!.currentUser
@@ -79,10 +80,14 @@ class ProfileFragment : Fragment() {
 
                 }
             }
+
+            prof_Post_count!!.text = "15"
+            prof_freindds_count!!.text = "929"
+            prof_reutation_count!!.text = "2100"
         }
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return view
     }
 
     fun setName(name:String){
@@ -92,6 +97,5 @@ class ProfileFragment : Fragment() {
     fun setImage(imgUrl:String){
         Glide.with(context!!).load(imgUrl).into(prof_img!!)
     }
-
 
 }

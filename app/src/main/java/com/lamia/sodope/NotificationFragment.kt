@@ -30,7 +30,7 @@ class NotificationFragment : Fragment() {
     var mAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     var currentUser: FirebaseUser? = null
 
-    var notifListView: RecyclerView?= null
+    var notifListView: RecyclerView? = null
     var blog_list: List<BlogPost>? = null
     var NotificationRecylerAdapter:NotificationRecylerAdapter? = null
 
@@ -41,38 +41,41 @@ class NotificationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        var view:View? = inflater.inflate(R.layout.fragment_notification, container, false)
+
+        FbasefireStore = FirebaseFirestore.getInstance()
+
         blog_list = ArrayList()
 
-        notifListView = notification_list
+        notifListView = view!!.findViewById(R.id.notification_list)
         NotificationRecylerAdapter = NotificationRecylerAdapter(blog_list as ArrayList<BlogPost>)
         notifListView!!.layoutManager = LinearLayoutManager(container!!.context)
         notifListView!!.adapter = NotificationRecylerAdapter
         notifListView!!.setHasFixedSize(true)
 
+        currentUser = mAuth!!.currentUser
 
         if(currentUser != null) {
 
-            try {
 
-                var notificationQuery:Query = FbasefireStore!!.collection("Posts").orderBy("timeStamp", Query.Direction.DESCENDING)
+            var notificationQuery:Query = FbasefireStore!!.collection("Posts").orderBy("timeStamp", Query.Direction.DESCENDING)
 
-                notificationQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { documentSnapshot, exception ->
+            notificationQuery.addSnapshotListener(activity!!, EventListener<QuerySnapshot>() { documentSnapshot, exception ->
 
+                if (!documentSnapshot!!.isEmpty()) {
 
-                    if (!documentSnapshot!!.isEmpty()) {
+                    if (isFirstPageFirstLoad!!) {
 
-                        if (isFirstPageFirstLoad!!) {
+                        lastVisible = documentSnapshot.documents.get(documentSnapshot.size() - 1);
+                        (blog_list as ArrayList<BlogPost>).clear()
 
-                            lastVisible = documentSnapshot.documents.get(documentSnapshot.size() - 1);
-                            (blog_list as ArrayList<BlogPost>).clear()
+                    }
 
-                        }
+                    for (doc: DocumentChange in documentSnapshot.documentChanges) {
 
-                        for (doc: DocumentChange in documentSnapshot.documentChanges) {
+                        if (doc.type == DocumentChange.Type.ADDED) {
 
-                            if (doc.type == DocumentChange.Type.ADDED) {
-
-                                var blogPost = doc.document.toObject(BlogPost::class.java)
+                            var blogPost = doc.document.toObject(BlogPost::class.java)
 
                                 if (isFirstPageFirstLoad!!) {
 
@@ -86,22 +89,17 @@ class NotificationFragment : Fragment() {
 
                                 NotificationRecylerAdapter!!.notifyDataSetChanged()
 
-                            }
                         }
-
-                        isFirstPageFirstLoad = false
                     }
-                })
 
-            }catch (e:Exception){
-
-
-            }
+                    isFirstPageFirstLoad = false
+                }
+            })
         }
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+        return view
 
     }
 
