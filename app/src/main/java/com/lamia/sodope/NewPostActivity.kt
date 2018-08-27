@@ -89,26 +89,26 @@ class NewPostActivity : AppCompatActivity() {
 
                 newPostBtn!!.isEnabled = false
 
-//                var postImageFile:File= File(postimageUri!!.path)
-//
-//                try {
-//
-//                    compImageFile = Uri.fromFile(id.zelory.compressor.Compressor(this)
-//                            .setMaxWidth(300)
-//                            .setMaxHeight(300)
-//                            .setQuality(75)
-//                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-//                            .compressToFile(postImageFile))
-//                }catch(e: IOException){
-//
-//                    e.printStackTrace()
-//                }
+                var postImageFile:File= File(postimageUri!!.path)
+
+                try {
+
+                    compressedImageFile = Uri.fromFile(id.zelory.compressor.Compressor(this)
+                            .setMaxWidth(500)
+                            .setMaxHeight(500)
+                            .setQuality(70)
+                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                            .compressToFile(postImageFile))
+                }catch(e: IOException){
+
+                    e.printStackTrace()
+                }
 
                 var randomImgName = FieldValue.serverTimestamp().toString()
 
                 var filepath = mStoreageRef!!.child("post_images").child(randomImgName + ".jpeg")
 
-                filepath.putFile(postimageUri!!).addOnCompleteListener(){task->
+                filepath.putFile(compressedImageFile!!).addOnCompleteListener(){task->
 
                  if(task.isSuccessful){
 
